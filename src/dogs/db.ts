@@ -1,18 +1,19 @@
-import * as mysql from 'promise-mysql';
+import * as mysql from 'mysql2/promise';
 
 // ---- MySQL Setup ---- //
 const createConnection = () => {
   return mysql.createConnection({
-      host: process.env.DB_HOST,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_NAME
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME
   });
 }
 
 const executeQuery = async (query: string) => {
   const connection = await createConnection();
-  const results = await connection.query(query);
+  const [results, meta] = await connection.query(query);
+  //console.log(results);
   connection.end();
   return results;
 }
@@ -31,10 +32,10 @@ export const listDogs = async () => {
 }
 
 export const getDog = async (id: number) => {
-  const query = 'SELECT * FROM dogs WHERE id = ' + id;
+  const query = `SELECT * FROM dogs WHERE id = ${id}`;
   try {
     const results = await executeQuery(query)
-    if (!results.length) {
+    if (!results) {
       return null;
     }
     return results[0];
@@ -51,7 +52,7 @@ export const getDogsForOwner = async (ownerId: number) => {
 
 export const createDog = async (name: string, ownerId: number) => {
   const createQuery = `INSERT INTO dogs (name, owner_id) VALUES(?, ?)`;
-  const params = [name, ownerId]
+  const params = [name, ownerId];
   const formattedQuery = mysql.format(createQuery, params);
 
   await executeQuery(formattedQuery);
@@ -82,9 +83,9 @@ export const listOwners = async () => {
 }
 
 export const getOwner = async (id: number) => {
-  const query = 'SELECT * from owners where id = ' + id;
+  const query = `SELECT * from owners where id = ${id}`;
   const results = await executeQuery(query);
-  if (!results.length) {
+  if (!results) {
     return null;
   }
   return results[0];
