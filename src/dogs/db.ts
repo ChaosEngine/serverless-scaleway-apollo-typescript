@@ -77,6 +77,28 @@ export const deleteDog = async (id: number) => {
 
 // -- Owners -- //
 
+export const createOwner = async (firstname: string, lastname: string) => {
+  const createQuery = `INSERT INTO owners (firstname, lastname) VALUES(?, ?)`;
+  const params = [firstname, lastname];
+  const formattedQuery = mysql.format(createQuery, params);
+
+  await executeQuery(formattedQuery);
+
+  // get last created id
+  const insertedIdQuery = `SELECT id from owners ORDER BY id DESC LIMIT 1`;
+  const result = await executeQuery(insertedIdQuery);
+  const owner = {
+    firstname, lastname,
+    id: result[0].id
+  };
+  return owner;
+}
+
+export const deleteOwner = async (id: number) => {
+  const query = `DELETE FROM owners WHERE id = ${id}`;
+  await executeQuery(query);
+}
+
 export const listOwners = async () => {
   const query = 'SELECT * FROM owners';
   return await executeQuery(query);

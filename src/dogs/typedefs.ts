@@ -29,5 +29,13 @@ export const typeDefs = gql`
     deleteDog(
       id: Int!
     ): Dog
+    
+    createOwner(
+      firstname: String!
+      lastname: String!
+    ): Owner
+    deleteOwner(
+      id: Int!
+    ): Owner
   }
 `;

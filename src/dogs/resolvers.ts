@@ -1,4 +1,4 @@
-import { listDogs, getDog, getOwner, getDogsForOwner, listOwners, createDog, deleteDog } from './db';
+import { listDogs, getDog, getOwner, getDogsForOwner, listOwners, createDog, deleteDog, createOwner, deleteOwner } from './db';
 
 export const resolvers = {
   Query: {
@@ -34,7 +34,7 @@ export const resolvers = {
       let dog;
       try {
         dog = await getDog(id);
-      } catch(err) {
+      } catch (err) {
         console.error(err);
         throw new Error('Something went wrong');
       }
@@ -43,12 +43,43 @@ export const resolvers = {
       }
       try {
         await deleteDog(dog.id);
-      } catch(error) {
+      } catch (error) {
         console.error(error);
         throw new Error('Something went wrong');
       }
       return dog;
-    }
+    },
+
+    createOwner: async (_, { firstname, lastname }) => {
+      // get Owner
+      try {
+        const owner = await createOwner(firstname, lastname);
+        return owner;
+      } catch (err) {
+        console.error(err);
+        throw new Error('Something went wrong');
+      }
+    },
+
+    deleteOwner: async (_, { id }) => {
+      let owner;
+      try {
+        owner = await getOwner(id);
+      } catch (err) {
+        console.error(err);
+        throw new Error('Something went wrong');
+      }
+      if (!owner) {
+        throw new Error('Owner does not exist');
+      }
+      try {
+        await deleteOwner(owner.id);
+      } catch (error) {
+        console.error(error);
+        throw new Error('Something went wrong');
+      }
+      return owner;
+    },
   },
 
   Dog: {
