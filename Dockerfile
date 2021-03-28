@@ -23,8 +23,8 @@ FROM node:lts-slim
 RUN npm install -g pm2
 COPY --from=build /home/node/ ./app/
 
-RUN echo "$(pwd)"/instantclient_21_1 > /etc/ld.so.conf.d/oracle-instantclient.conf && \
+RUN echo /app/instantclient_21_1 > /etc/ld.so.conf.d/oracle-instantclient.conf && \
 	ldconfig
 
 ENV PORT=8080
-CMD ["pm2-runtime", "src/dogs/container.js"]
+CMD exec node /app/src/dogs/container.js

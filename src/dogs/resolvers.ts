@@ -1,5 +1,7 @@
-import { listDogs, getDog, getOwner, getDogsForOwner, listOwners, createDog, deleteDog, createOwner, deleteOwner } from './db';
-import { Owner, Dog } from './typedefs';
+import {
+  listDogs, getDog, getOwner, getDogsForOwner, listOwners, createDog, deleteDog, createOwner, deleteOwner
+} from './db.js';
+import { Owner, Dog } from './typedefs.js';
 
 type ID = {
   id: number

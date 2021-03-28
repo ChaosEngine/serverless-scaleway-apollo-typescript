@@ -1,5 +1,5 @@
 import * as oracledb from 'oracledb';
-import { Owner, Dog } from './typedefs';
+import { Owner, Dog } from './typedefs.js';
 
 // ---- MySQL Setup ---- //
 const createConnection = () => {
