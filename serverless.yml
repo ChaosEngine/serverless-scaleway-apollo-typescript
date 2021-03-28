@@ -3,7 +3,7 @@ service:
 
 provider:
   name: scaleway
-  runtime: node10
+  runtime: node14
 
 custom:
   containers:
