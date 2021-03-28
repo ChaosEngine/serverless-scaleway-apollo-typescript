@@ -39,3 +39,16 @@ export const typeDefs = gql`
     ): Owner
   }
 `;
+
+
+export type Owner ={
+  id: number
+  firstname: string
+  lastname: string
+};
+
+export type Dog = {
+  id: number
+  name: string
+  owner_id: number
+};

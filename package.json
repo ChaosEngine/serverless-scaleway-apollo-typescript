@@ -1,5 +1,5 @@
 {
-  "name": "node10-graphql",
+  "name": "node14-graphql",
   "version": "1.0.0",
   "description": "",
   "main": "handler.js",
@@ -13,11 +13,12 @@
     "apollo-server": "2.22.1",
     "apollo-server-lambda": "2.22.1",
     "graphql": "15.5.0",
-    "mysql2": "2.2.5",
+    "oracledb": "5.1.0",
     "serverless-scaleway-functions": "0.1.18"
   },
   "devDependencies": {
     "eslint": "7.23.0",
-    "typescript": "4.2.3"
+    "typescript": "4.2.3",
+    "@types/oracledb": "5.1.0"
   }
 }

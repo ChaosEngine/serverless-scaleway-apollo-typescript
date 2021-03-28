@@ -1,15 +1,28 @@
 import { listDogs, getDog, getOwner, getDogsForOwner, listOwners, createDog, deleteDog, createOwner, deleteOwner } from './db';
+import { Owner, Dog } from './typedefs';
+
+type ID = {
+  id: number
+};
+type InpDog = {
+  name: string
+  ownerId: number
+};
+type InpOwner = {
+  firstname: string
+  lastname: string
+};
 
 export const resolvers = {
   Query: {
     dogs: () => listDogs(),
-    dog: (_, { id }) => getDog(id),
+    dog: (_: any, { id }: ID) => getDog(id),
     owners: () => listOwners(),
-    owner: (_, { id }) => getOwner(id)
+    owner: (_: any, { id }: ID) => getOwner(id)
   },
 
   Mutation: {
-    createDog: async (_, { name, ownerId }) => {
+    createDog: async (_: any, { name, ownerId }: InpDog) => {
       // get Owner
       let owner;
       try {
@@ -30,7 +43,7 @@ export const resolvers = {
       }
     },
 
-    deleteDog: async (_, { id }) => {
+    deleteDog: async (_: any, { id }: ID) => {
       let dog;
       try {
         dog = await getDog(id);
@@ -50,7 +63,7 @@ export const resolvers = {
       return dog;
     },
 
-    createOwner: async (_, { firstname, lastname }) => {
+    createOwner: async (_: any, { firstname, lastname }: InpOwner) => {
       // get Owner
       try {
         const owner = await createOwner(firstname, lastname);
@@ -61,7 +74,7 @@ export const resolvers = {
       }
     },
 
-    deleteOwner: async (_, { id }) => {
+    deleteOwner: async (_: any, { id }: ID) => {
       let owner;
       try {
         owner = await getOwner(id);
@@ -83,10 +96,10 @@ export const resolvers = {
   },
 
   Dog: {
-    owner: dog => getOwner(dog.owner_id)
+    owner: (dog: Dog) => getOwner(dog.owner_id)
   },
 
   Owner: {
-    dogs: owner => getDogsForOwner(owner.id)
+    dogs: (owner: Owner) => getDogsForOwner(owner.id)
   }
 }
