@@ -20,11 +20,15 @@ RUN tsc
 
 
 FROM node:lts-slim
+RUN apt-get update && apt-get install -y libaio1 && \
+	rm -rf /var/lib/apt/lists/*
 RUN npm install -g pm2
-COPY --from=build /home/node/ ./app/
+COPY --from=build /home/node/dist ./app/
+COPY --from=build /home/node/instantclient_21_1/ ./app/instantclient_21_1/
+COPY --from=build /home/node/node_modules/ ./app/node_modules/
 
 RUN echo /app/instantclient_21_1 > /etc/ld.so.conf.d/oracle-instantclient.conf && \
 	ldconfig
 
 ENV PORT=8080
-CMD exec node /app/src/dogs/container.js
+CMD exec node /app/container.js

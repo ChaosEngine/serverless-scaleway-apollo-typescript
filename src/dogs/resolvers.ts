@@ -1,7 +1,7 @@
 import {
   listDogs, getDog, getOwner, getDogsForOwner, listOwners, createDog, deleteDog, createOwner, deleteOwner
-} from './db.js';
-import { Owner, Dog } from './typedefs.js';
+} from './db';
+import { Owner, Dog } from './typedefs';
 
 type ID = {
   id: number
@@ -18,9 +18,33 @@ type InpOwner = {
 export const resolvers = {
   Query: {
     dogs: () => listDogs(),
-    dog: (_: any, { id }: ID) => getDog(id),
+    dog: async (_: any, { id }: ID) => {
+      let res;
+      try {
+        res = await getDog(id);
+      } catch (err) {
+        console.error(err);
+        throw new Error('Something went wrong');
+      }
+      if (!res) {
+        throw new Error('Dog does not exist');
+      }
+      return res;
+    },
     owners: () => listOwners(),
-    owner: (_: any, { id }: ID) => getOwner(id)
+    owner: async (_: any, { id }: ID) => {
+      let res;
+      try {
+        res = await getOwner(id);
+      } catch (err) {
+        console.error(err);
+        throw new Error('Something went wrong');
+      }
+      if (!res) {
+        throw new Error('Owner does not exist');
+      }
+      return res;
+    }
   },
 
   Mutation: {
