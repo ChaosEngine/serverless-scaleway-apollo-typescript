@@ -4,42 +4,55 @@ import { Owner, Dog } from './typedefs';
 // ---- MySQL Setup ---- //
 const createConnection = () => {
   console.info("new conn");
-  return oracledb.getConnection();
+  return oracledb.getConnection({
+    user: process.env.NODE_ORACLEDB_USER,
+    password: process.env.NODE_ORACLEDB_PASSWORD,
+    connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING,
+    externalAuth: false
+  });
 }
 
 async function executeQuery<T>(query: string): Promise<T[] | undefined> {
   const connection = await createConnection();
+  try {
 
-  console.info(`new query => ${query}`);
-  const binds = {};
-  // For a complete list of options see the documentation.
-  const options = {
-    outFormat: oracledb.OUT_FORMAT_OBJECT,   // query result format
-    // extendedMetaData: true,               // get extra metadata
-    // prefetchRows:     100,                // internal buffer allocation size for tuning
-    // fetchArraySize:   100                 // internal buffer allocation size for tuning
-    autoCommit: true,
-  };
+    console.info(`new query => ${query}`);
+    const binds = {};
+    // For a complete list of options see the documentation.
+    const options = {
+      outFormat: oracledb.OUT_FORMAT_OBJECT,   // query result format
+      // extendedMetaData: true,               // get extra metadata
+      // prefetchRows:     100,                // internal buffer allocation size for tuning
+      // fetchArraySize:   100                 // internal buffer allocation size for tuning
+      autoCommit: true,
+    };
 
-  const results = await connection.execute<T>(query, binds, options);
-  // console.log(results.rows);
-  await connection.close();
-  return results.rows;
+    const results = await connection.execute<T>(query, binds, options);
+    // console.log(results.rows);
+    return results.rows;
+  }
+  finally {
+    await connection.close();
+  }
 }
 
 async function executeQueryWithParams<T>(query: string, binds: Array<any>, bindDefs: Array<any>): Promise<T[] | undefined> {
   const connection = await createConnection();
-  console.info(`new query with params ${query}`);
-  const options = {
-    outFormat: oracledb.OUT_FORMAT_OBJECT,
-    autoCommit: true,
-    // batchErrors: true,  // continue processing even if there are data errors
-    bindDefs
-  };
-  const results = await connection.execute<T>(query, binds, options);
-  // console.log(results.rows);
-  await connection.close();
-  return results.rows;
+  try {
+    console.info(`new query with params ${query}`);
+    const options = {
+      outFormat: oracledb.OUT_FORMAT_OBJECT,
+      autoCommit: true,
+      // batchErrors: true,  // continue processing even if there are data errors
+      bindDefs
+    };
+    const results = await connection.execute<T>(query, binds, options);
+    // console.log(results.rows);
+    return results.rows;
+  }
+  finally {
+    await connection.close();
+  }
 }
 
 // --- Repositories ---- //
