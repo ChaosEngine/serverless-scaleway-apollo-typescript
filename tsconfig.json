@@ -2,13 +2,13 @@
   "compilerOptions": {
     "allowJs": true,
     "alwaysStrict": true,
-    "esModuleInterop": true,
+    // "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "lib": ["dom", "es2017"],
-    "module": "esnext",
-    "moduleResolution": "node",
+    // "module": "esnext",
+    // "moduleResolution": "node",
     "noEmit": false,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
@@ -16,7 +16,23 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "esnext"
+    // "target": "esnext",
+
+
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "sourceMap": false,
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+        "*": [
+            "node_modules/*"
+        ]
+    }
   },
   "exclude": ["node_modules"],
   "include": ["**/*.ts", "**/*.tsx"]

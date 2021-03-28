@@ -3,17 +3,14 @@ import { Owner, Dog } from './typedefs';
 
 // ---- MySQL Setup ---- //
 const createConnection = () => {
-  return oracledb.getConnection({
-    user: process.env.NODE_ORACLEDB_USER,
-    password: process.env.NODE_ORACLEDB_PASSWORD,
-    connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING,
-    externalAuth: false
-  });
+  console.info("new conn");
+  return oracledb.getConnection();
 }
 
 async function executeQuery<T>(query: string): Promise<T[] | undefined> {
   const connection = await createConnection();
 
+  console.info(`new query => ${query}`);
   const binds = {};
   // For a complete list of options see the documentation.
   const options = {
@@ -32,6 +29,7 @@ async function executeQuery<T>(query: string): Promise<T[] | undefined> {
 
 async function executeQueryWithParams<T>(query: string, binds: Array<any>, bindDefs: Array<any>): Promise<T[] | undefined> {
   const connection = await createConnection();
+  console.info(`new query with params ${query}`);
   const options = {
     outFormat: oracledb.OUT_FORMAT_OBJECT,
     autoCommit: true,
@@ -68,7 +66,7 @@ export const getDog = async (id: number): Promise<Dog | undefined> => {
     if (!results || results.length <= 0) {
       return undefined;
     }
-    console.log(results);
+    // console.log(results);
     return results[0];
   } catch (error) {
     console.error(error);
