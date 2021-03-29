@@ -15,7 +15,6 @@ const createConnection = () => {
 async function executeQuery<T>(query: string): Promise<T[] | undefined> {
   const connection = await createConnection();
   try {
-
     console.info(`new query => ${query}`);
     const binds = {};
     // For a complete list of options see the documentation.
@@ -36,7 +35,7 @@ async function executeQuery<T>(query: string): Promise<T[] | undefined> {
   }
 }
 
-async function executeQueryWithParams<T>(query: string, binds: Array<any>, bindDefs: Array<any>): Promise<T[] | undefined> {
+async function executeQueryWithParams<T>(query: string, binds: Array<any>, bindDefs: Array<any>): Promise<oracledb.Result<T> | undefined> {
   const connection = await createConnection();
   try {
     console.info(`new query with params ${query}`);
@@ -48,7 +47,23 @@ async function executeQueryWithParams<T>(query: string, binds: Array<any>, bindD
     };
     const results = await connection.execute<T>(query, binds, options);
     // console.log(results.rows);
-    return results.rows;
+    return results;
+  }
+  finally {
+    await connection.close();
+  }
+}
+
+async function executeQueryReturningDml<T>(query: string, parameters: any): Promise<oracledb.Result<T> | undefined> {
+  const connection = await createConnection();
+  try {
+    console.info(`new query with params ${query}`);
+    const result = await connection.execute<T>(query, parameters,
+      {
+        autoCommit: true,
+      });
+    // console.log(results.rows);
+    return result;
   }
   finally {
     await connection.close();
@@ -76,11 +91,11 @@ export const getDog = async (id: number): Promise<Dog | undefined> => {
   const query = `SELECT ID "id", NAME "name", OWNER_ID "owner_id" FROM dogs WHERE id = :1`;
   try {
     const results = await executeQueryWithParams<Dog>(query, binds, bindDefs);
-    if (!results || results.length <= 0) {
+    if (!results || !results.rows || results.rows?.length <= 0) {
       return undefined;
     }
     // console.log(results);
-    return results[0];
+    return results.rows[0];
   } catch (error) {
     console.error(error);
     throw new Error('unable to access database');
@@ -93,30 +108,23 @@ export const getDogsForOwner = async (ownerId: number): Promise<Dog[] | undefine
     { type: oracledb.NUMBER },
   ];
   const query = `SELECT ID "id", NAME "name", OWNER_ID "owner_id" FROM dogs WHERE owner_id = :1`;
-  return await executeQueryWithParams<Dog>(query, binds, bindDefs);
+  const result = await executeQueryWithParams<Dog>(query, binds, bindDefs);
+  return result?.rows;
 }
 
 export const createDog = async (name: string, ownerId: number): Promise<Dog | undefined> => {
-  const createQuery = `INSERT INTO dogs (name, owner_id) VALUES(:1, :2)`;
-  let binds = [name, ownerId];
-  let bindDefs = [
-    { type: oracledb.STRING, maxSize: 255 },
-    { type: oracledb.NUMBER },
-  ];
+  const createQuery = `INSERT INTO dogs (name, owner_id) VALUES(:name, :owner_id) RETURNING id INTO :id`;
+  const result = await executeQueryReturningDml<any>(createQuery,
+    {
+      owner_id: { type: oracledb.NUMBER, val: ownerId },
+      name: { type: oracledb.STRING, val: name },
+      id: { type: oracledb.NUMBER, dir: oracledb.BIND_OUT },
+    });
 
-  await executeQueryWithParams<any>(createQuery, binds, bindDefs);
-
-  // get last created id
-  const insertedIdQuery = `SELECT ID "id" FROM dogs WHERE owner_id = :1 AND ROWNUM <= 1 ORDER BY id DESC`;
-  binds = [ownerId];
-  bindDefs = [
-    { type: oracledb.NUMBER },
-  ];
-  const result = await executeQueryWithParams<Dog>(insertedIdQuery, binds, bindDefs);
   const dog = {
     name,
     owner_id: ownerId,
-    id: result && result[0] !== undefined ? result[0].id : 0
+    id: result && result.outBinds ? result.outBinds.id[0] : 0
   };
   return dog;
 }
@@ -127,27 +135,23 @@ export const deleteDog = async (id: number) => {
     { type: oracledb.NUMBER },
   ];
   const query = `DELETE FROM dogs WHERE id = :1`;
-  await executeQueryWithParams<any>(query, binds, bindDefs);
+  const result = await executeQueryWithParams<any>(query, binds, bindDefs);
+  return result?.rows;
 }
 
 // -- Owners -- //
 
 export const createOwner = async (firstname: string, lastname: string): Promise<Owner | undefined> => {
-  const createQuery = `INSERT INTO owners (firstname, lastname) VALUES(:1, :2)`;
-  const binds = [firstname, lastname];
-  const bindDefs = [
-    { type: oracledb.STRING, maxSize: 255 },
-    { type: oracledb.STRING, maxSize: 255 },
-  ];
-
-  await executeQueryWithParams<any>(createQuery, binds, bindDefs);
-
-  // get last created id
-  const insertedIdQuery = `SELECT ID "id" from owners WHERE ROWNUM <= 1 ORDER BY id DESC`;
-  const result = await executeQuery<Owner>(insertedIdQuery);
+  const createQuery = `INSERT INTO owners (firstname, lastname) VALUES(:firstname, :lastname) RETURNING id INTO :id`;
+  const result = await executeQueryReturningDml<any>(createQuery,
+    {
+      firstname: { type: oracledb.STRING, val: firstname },
+      lastname: { type: oracledb.STRING, val: lastname },
+      id: { type: oracledb.NUMBER, dir: oracledb.BIND_OUT },
+    });
   const owner = {
     firstname, lastname,
-    id: result && result[0] !== undefined ? result[0].id : 0
+    id: result && result.outBinds ? result.outBinds.id[0] : 0
   };
   return owner;
 }
@@ -158,7 +162,8 @@ export const deleteOwner = async (id: number) => {
     { type: oracledb.NUMBER },
   ];
   const query = `DELETE FROM owners WHERE id = :1`;
-  await executeQueryWithParams<any>(query, binds, bindDefs);
+  const result = await executeQueryWithParams<any>(query, binds, bindDefs);
+  return result?.rows;
 }
 
 export const listOwners = async (): Promise<Owner[] | undefined> => {
@@ -173,8 +178,8 @@ export const getOwner = async (id: number): Promise<Owner | undefined> => {
   ];
   const query = `SELECT ID "id", FIRSTNAME "firstname", LASTNAME "lastname" from owners where id = :1`;
   const results = await executeQueryWithParams<Owner>(query, binds, bindDefs);
-  if (!results || results.length <= 0) {
+  if (!results || !results.rows || results.rows.length <= 0) {
     return undefined;
   }
-  return results[0];
+  return results.rows[0];
 }
