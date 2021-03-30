@@ -1,4 +1,4 @@
-exports.handler = async (event, context) => {
+export const demoHandler = async (event: any, _context: unknown) => {
   console.log(event);
   return {
     body: JSON.stringify({

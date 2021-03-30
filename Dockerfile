@@ -31,4 +31,4 @@ RUN echo /app/instantclient_21_1 > /etc/ld.so.conf.d/oracle-instantclient.conf &
 	ldconfig
 
 ENV PORT=8080
-CMD exec node /app/container.js
+CMD exec node /app/dogs/container.js
