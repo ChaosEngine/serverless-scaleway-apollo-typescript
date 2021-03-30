@@ -1,7 +1,7 @@
 import {
   listDogs, getDog, getOwner, getDogsForOwner, listOwners, createDog, deleteDog, createOwner, deleteOwner
 } from './db';
-import { Owner, Dog } from './typedefs';
+import { Owner, Dog, NoOwnerError } from './typedefs';
 
 type ID = {
   id: number
@@ -49,23 +49,15 @@ export const resolvers = {
 
   Mutation: {
     createDog: async (_: any, { name, ownerId }: InpDog) => {
-      // get Owner
-      let owner;
       try {
-        owner = await getOwner(ownerId);
-      } catch (err) {
-        console.error(err);
-        throw new Error('Something went wrong');
-      }
-      if (!owner) {
-        throw new Error('Owner does not exist');
-      }
-      try {
-        const newDog = await createDog(name, ownerId)
+        const newDog = await createDog(name, ownerId);
         return newDog;
       } catch (err) {
         console.error(err);
-        throw new Error('Something went wrong');
+        if (err instanceof NoOwnerError)
+          throw new Error('Owner does not exist');
+        else
+          throw new Error('Something went wrong');
       }
     },
 

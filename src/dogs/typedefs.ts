@@ -41,7 +41,7 @@ export const typeDefs = gql`
 `;
 
 
-export type Owner ={
+export type Owner = {
   id: number
   firstname: string
   lastname: string
@@ -52,3 +52,17 @@ export type Dog = {
   name: string
   owner_id: number
 };
+
+export class NoOwnerError extends Error {
+  constructor(...params:any[]) {
+    // Pass remaining arguments (including vendor specific ones) to parent constructor
+    super(...params)
+
+    // Maintains proper stack trace for where our error was thrown (only available on V8)
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, NoOwnerError);
+    }
+
+    this.name = 'NoOwnerError';
+  }
+}

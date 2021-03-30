@@ -1,5 +1,5 @@
 import oracledb from 'oracledb';
-import { Owner, Dog } from './typedefs';
+import { Owner, Dog, NoOwnerError } from './typedefs';
 
 // ---- MySQL Setup ---- //
 const createConnection = () => {
@@ -113,18 +113,40 @@ export const getDogsForOwner = async (ownerId: number): Promise<Dog[] | undefine
 }
 
 export const createDog = async (name: string, ownerId: number): Promise<Dog | undefined> => {
-  const createQuery = `INSERT INTO dogs (name, owner_id) VALUES(:name, :owner_id) RETURNING id INTO :id`;
+  // const createQuery = `INSERT INTO dogs (name, owner_id) VALUES(:name, :owner_id) RETURNING id INTO :id`;
+  const createQuery = `
+      DECLARE
+				oid NUMBER;
+			BEGIN
+        BEGIN
+          SELECT o.id
+          INTO oid
+          FROM owners o
+          WHERE o.id = :owner_id;
+        EXCEPTION
+          When no_data_found then
+          oid := -1;
+        END;
+			
+				IF ( oid > -1 ) THEN
+          INSERT INTO dogs (name, owner_id) VALUES(:name, oid) RETURNING id INTO :new_id;
+				END IF;
+			END;
+  `;
   const result = await executeQueryReturningDml<any>(createQuery,
     {
       owner_id: { type: oracledb.NUMBER, val: ownerId },
       name: { type: oracledb.STRING, val: name },
-      id: { type: oracledb.NUMBER, dir: oracledb.BIND_OUT },
+      new_id: { type: oracledb.NUMBER, dir: oracledb.BIND_OUT },
     });
-
+  //console.log(result?.outBinds);
+  const new_id = result && result.outBinds ? result.outBinds.new_id : undefined;
+  if (!new_id || new_id <= -1)
+    throw new NoOwnerError();
   const dog = {
     name,
     owner_id: ownerId,
-    id: result && result.outBinds ? result.outBinds.id[0] : 0
+    id: new_id
   };
   return dog;
 }
