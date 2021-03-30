@@ -8,8 +8,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "2.22.1",
-    "apollo-server-lambda": "2.22.1",
+    "apollo-server": "2.22.2",
+    "apollo-server-lambda": "2.22.2",
     "graphql": "15.5.0",
     "oracledb": "5.1.0",
     "serverless-scaleway-functions": "0.1.18"
