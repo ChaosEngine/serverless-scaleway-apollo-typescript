@@ -4,12 +4,7 @@ import { Owner, Dog, NoOwnerError } from './typedefs';
 // ---- MySQL Setup ---- //
 const createConnection = () => {
   console.info("new conn");
-  return oracledb.getConnection({
-    user: process.env.NODE_ORACLEDB_USER,
-    password: process.env.NODE_ORACLEDB_PASSWORD,
-    connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING,
-    externalAuth: false
-  });
+  return oracledb.getConnection();
 }
 
 async function executeQuery<T>(query: string): Promise<T[] | undefined> {
