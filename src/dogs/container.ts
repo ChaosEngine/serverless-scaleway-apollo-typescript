@@ -29,9 +29,9 @@ process
 
 server.listen({ port: process.env.PORT || 8080 }).then(() => {
 	oracledb.createPool({
-		user: process.env.NODE_ORACLEDB_USER,
-		password: process.env.NODE_ORACLEDB_PASSWORD,
-		connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING,
+		user: process.env.NODE_ORACLEDB_USER || "BAD_USER",
+		password: process.env.NODE_ORACLEDB_PASSWORD || "BAD_PASS",
+		connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING || "BAD_DATA_SOURCE",
 		externalAuth: false
 	});
 

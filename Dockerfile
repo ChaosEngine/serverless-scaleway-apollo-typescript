@@ -30,5 +30,5 @@ COPY --from=build /home/node/node_modules/ ./app/node_modules/
 RUN echo /app/instantclient_21_1 > /etc/ld.so.conf.d/oracle-instantclient.conf && \
 	ldconfig
 
-ENV PORT=8080
-CMD exec node /app/dogs/container.js
+ENV PORT=8081
+ENTRYPOINT [ "/usr/local/bin/node", "/app/dogs/container.js" ]

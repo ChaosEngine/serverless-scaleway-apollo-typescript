@@ -1,5 +1,5 @@
 service:
-  name: meetup
+  name: apollo
 
 provider:
   name: scaleway
@@ -10,10 +10,9 @@ custom:
     apollo-container:
       directory: .
       env:
-        DB_HOST: 
-        DB_USER: 
-        DB_PASSWORD:
-        DB_NAME:
+        NODE_ORACLEDB_USER: BAD_USER
+        NODE_ORACLEDB_PASSWORD: BAD_PASS
+        NODE_ORACLEDB_CONNECTIONSTRING: BAD_DATA_SOURCE
 
 
 plugins:
@@ -31,7 +30,6 @@ functions:
   apollo-lambda:
     handler: dogs/index.handler
     env:
-      DB_HOST: 
-      DB_USER:
-      DB_PASSWORD:
-      DB_NAME: 
+      NODE_ORACLEDB_USER: BAD_USER
+      NODE_ORACLEDB_PASSWORD: BAD_PASS
+      NODE_ORACLEDB_CONNECTIONSTRING: BAD_DATA_SOURCE
