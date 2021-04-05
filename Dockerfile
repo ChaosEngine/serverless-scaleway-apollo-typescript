@@ -22,13 +22,15 @@ RUN tsc
 FROM node:lts-slim
 RUN apt-get update && apt-get install -y libaio1 && \
 	rm -rf /var/lib/apt/lists/*
-RUN npm install -g pm2
-COPY --from=build /home/node/dist ./app/
-COPY --from=build /home/node/instantclient_21_1/ ./app/instantclient_21_1/
-COPY --from=build /home/node/node_modules/ ./app/node_modules/
+#RUN npm install -g pm2
+WORKDIR /home/node
+COPY --from=build --chown=node:node /home/node/dist ./
+COPY --from=build --chown=node:node /home/node/instantclient_21_1/ ./instantclient_21_1/
+COPY --from=build --chown=node:node /home/node/node_modules/ ./node_modules/
 
-RUN echo /app/instantclient_21_1 > /etc/ld.so.conf.d/oracle-instantclient.conf && \
+RUN echo /home/node/instantclient_21_1 > /etc/ld.so.conf.d/oracle-instantclient.conf && \
 	ldconfig
+USER node
 
 ENV PORT=8081
-ENTRYPOINT [ "/usr/local/bin/node", "/app/dogs/container.js" ]
+ENTRYPOINT [ "/usr/local/bin/node", "/home/node/dogs/container.js" ]
