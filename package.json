@@ -1,6 +1,6 @@
 {
   "name": "node14-graphql",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -8,15 +8,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "apollo-server": "2.22.2",
-    "apollo-server-lambda": "2.22.2",
-    "graphql": "15.5.0",
-    "oracledb": "5.1.0",
-    "serverless-scaleway-functions": "0.1.18"
+    "apollo-server": "3.10.2",
+    "apollo-server-lambda": "3.10.2",
+    "graphql": "16.6.0",
+    "oracledb": "5.4.0",
+    "serverless-scaleway-functions": "0.4.1"
   },
   "devDependencies": {
-    "eslint": "7.23.0",
-    "typescript": "4.2.3",
-    "@types/oracledb": "5.1.0"
+    "eslint": "8.23.0",
+    "typescript": "4.8.2",
+    "@types/oracledb": "5.2.3"
   }
 }
