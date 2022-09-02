@@ -72,7 +72,7 @@ export const listDogs = async (): Promise<Dog[] | undefined> => {
   const query = 'SELECT ID "id", NAME "name", OWNER_ID "owner_id" from dogs';
   try {
     return await executeQuery<Dog>(query);
-  } catch (error) {
+  } catch (error:any) {
     console.error(error);
     throw new Error('unable to access database');
   }
@@ -91,7 +91,7 @@ export const getDog = async (id: number): Promise<Dog | undefined> => {
     }
     // console.log(results);
     return results.rows[0];
-  } catch (error) {
+  } catch (error:any) {
     console.error(error);
     throw new Error('unable to access database');
   }

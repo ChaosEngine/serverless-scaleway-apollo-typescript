@@ -22,7 +22,7 @@ export const resolvers = {
       let res;
       try {
         res = await getDog(id);
-      } catch (err) {
+      } catch (err:any) {
         console.error(err);
         throw new Error('Something went wrong');
       }
@@ -36,7 +36,7 @@ export const resolvers = {
       let res;
       try {
         res = await getOwner(id);
-      } catch (err) {
+      } catch (err:any) {
         console.error(err);
         throw new Error('Something went wrong');
       }
@@ -52,7 +52,7 @@ export const resolvers = {
       try {
         const newDog = await createDog(name, ownerId);
         return newDog;
-      } catch (err) {
+      } catch (err:any) {
         console.error(err);
         if (err instanceof NoOwnerError)
           throw new Error('Owner does not exist');
@@ -65,7 +65,7 @@ export const resolvers = {
       let dog;
       try {
         dog = await getDog(id);
-      } catch (err) {
+      } catch (err:any) {
         console.error(err);
         throw new Error('Something went wrong');
       }
@@ -74,7 +74,7 @@ export const resolvers = {
       }
       try {
         await deleteDog(dog.id);
-      } catch (error) {
+      } catch (error:any) {
         console.error(error);
         throw new Error('Something went wrong');
       }
@@ -86,7 +86,7 @@ export const resolvers = {
       try {
         const owner = await createOwner(firstname, lastname);
         return owner;
-      } catch (err) {
+      } catch (err:any) {
         console.error(err);
         throw new Error('Something went wrong');
       }
@@ -96,7 +96,7 @@ export const resolvers = {
       let owner;
       try {
         owner = await getOwner(id);
-      } catch (err) {
+      } catch (err:any) {
         console.error(err);
         throw new Error('Something went wrong');
       }
@@ -105,7 +105,7 @@ export const resolvers = {
       }
       try {
         await deleteOwner(owner.id);
-      } catch (error) {
+      } catch (error:any) {
         console.error(error);
         throw new Error('Something went wrong');
       }
