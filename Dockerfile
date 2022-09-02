@@ -1,4 +1,4 @@
-FROM node:14-alpine as build
+FROM node:lts-alpine as build
 WORKDIR /home/node
 RUN npm i -g @zeit/ncc
 COPY package*.json ./
@@ -11,7 +11,7 @@ COPY src ./src
 
 
 RUN ncc build -o build ./src/dogs/container.ts
-FROM node:14-alpine
+FROM node:lts-alpine
 RUN npm install -g pm2
 COPY --from=build /home/node/build ./
 ENV PORT=8080
