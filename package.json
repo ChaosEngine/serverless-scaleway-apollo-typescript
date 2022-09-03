@@ -7,7 +7,6 @@
   },
   "author": "",
   "license": "ISC",
-  "type": "module",
   "dependencies": {
     "apollo-server": "3.10.2",
     "apollo-server-lambda": "3.10.2",
