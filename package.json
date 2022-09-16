@@ -11,12 +11,12 @@
     "apollo-server": "3.10.2",
     "apollo-server-lambda": "3.10.2",
     "graphql": "16.6.0",
-    "oracledb": "5.4.0",
-    "serverless-scaleway-functions": "0.4.1"
+    "oracledb": "5.5.0",
+    "serverless-scaleway-functions": "0.4.2"
   },
   "devDependencies": {
-    "eslint": "8.23.0",
-    "typescript": "4.8.2",
+    "eslint": "8.23.1",
+    "typescript": "4.8.3",
     "@types/oracledb": "5.2.3"
   }
 }
