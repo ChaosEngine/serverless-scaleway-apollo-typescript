@@ -5,7 +5,7 @@ WORKDIR /home/node
 COPY package*.json ./
 RUN npm install && npm install typescript@latest -g
 
-RUN wget https://download.oracle.com/otn_software/linux/instantclient/217000/instantclient-basiclite-linux.x64-21.7.0.0.0dbru.zip && \
+RUN wget https://download.oracle.com/otn_software/linux/instantclient/218000/instantclient-basiclite-linux.x64-21.8.0.0.0dbru.zip && \
 	unzip -o *.zip && \
 	rm -f *.zip && \
 	cd ./instantclient_* && rm -f *jdbc* *occi* *mysql* *mql1* *ipc1* *jar uidrvci genezi adrci && \
