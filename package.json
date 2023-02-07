@@ -11,8 +11,7 @@
     "apollo-server": "3.11.1",
     "apollo-server-lambda": "3.11.1",
     "graphql": "16.6.0",
-    "oracledb": "5.5.0",
-    "serverless-scaleway-functions": "0.4.5"
+    "oracledb": "5.5.0"
   },
   "devDependencies": {
     "eslint": "8.33.0",
