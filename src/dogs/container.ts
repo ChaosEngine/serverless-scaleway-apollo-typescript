@@ -1,10 +1,14 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
 import oracledb from 'oracledb';
 import { typeDefs } from './typedefs';
 import { resolvers } from './resolvers';
 
+interface MyContext {
+	token?: String;
+}
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer<MyContext>({ typeDefs, resolvers });
 
 async function closePoolAndExit() {
 	console.log('\nTerminating');
@@ -17,7 +21,7 @@ async function closePoolAndExit() {
 		await oracledb.getPool().close(10);
 		console.log('Pool closed');
 		process.exit(0);
-	} catch (err:any) {
+	} catch (err: any) {
 		console.error(err.message);
 		process.exit(1);
 	}
@@ -27,7 +31,23 @@ process
 	.once('SIGINT', closePoolAndExit);
 
 
-server.listen({ port: process.env.PORT || 8080 }).then(() => {
+//Apollo v3
+//server.listen({ port: process.env.PORT || 8080 }).then(() => {
+//      oracledb.createPool({
+//              user: process.env.NODE_ORACLEDB_USER || "BAD_USER",
+//              password: process.env.NODE_ORACLEDB_PASSWORD || "BAD_PASS",
+//              connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING || "BAD_DATA_SOURCE",
+//              externalAuth: false
+//      });
+//
+//      console.log('Server listening');
+//});
+
+//Apollo-v4
+startStandaloneServer(server, { 
+	listen: { port: parseInt(process.env.PORT || "8080") }
+	// ,context: async ({ req }) => ({ token: req.headers.token })
+}).then(({ url }) => {
 	oracledb.createPool({
 		user: process.env.NODE_ORACLEDB_USER || "BAD_USER",
 		password: process.env.NODE_ORACLEDB_PASSWORD || "BAD_PASS",
@@ -35,5 +55,5 @@ server.listen({ port: process.env.PORT || 8080 }).then(() => {
 		externalAuth: false
 	});
 
-	console.log('Server listening');
+	console.log(`🚀  Server ready at ${url}`);
 });
