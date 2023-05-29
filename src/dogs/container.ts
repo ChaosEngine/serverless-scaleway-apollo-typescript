@@ -30,32 +30,20 @@ process
 	.once('SIGTERM', closePoolAndExit)
 	.once('SIGINT', closePoolAndExit);
 
-
-//Apollo v3
-//server.listen({ port: process.env.PORT || 8080 }).then(() => {
-//      oracledb.createPool({
-//              user: process.env.NODE_ORACLEDB_USER || "BAD_USER",
-//              password: process.env.NODE_ORACLEDB_PASSWORD || "BAD_PASS",
-//              connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING || "BAD_DATA_SOURCE",
-//              externalAuth: false
-//      });
-//
-//      console.log('Server listening');
-//});
-
 //Apollo-v4
 startStandaloneServer(server, { 
 	listen: { port: parseInt(process.env.PORT || "8080") }
 	// ,context: async ({ req }) => ({ token: req.headers.token })
 }).then(({ url }) => {
-	oracledb.initOracleClient();
-
-	oracledb.createPool({
-		user: process.env.NODE_ORACLEDB_USER || "BAD_USER",
-		password: process.env.NODE_ORACLEDB_PASSWORD || "BAD_PASS",
-		connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING || "BAD_DATA_SOURCE",
-		externalAuth: false
-	});
+	const dbConfig = {
+		user: process.env.NODE_ORACLEDB_USER,
+		password: process.env.NODE_ORACLEDB_PASSWORD,
+		connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING,
+		configDir: "./instantclient/network/admin",
+		walletLocation: "./instantclient/network/admin",
+		walletPassword: process.env.NODE_ORACLEDB_PASSWORD
+	};
+	oracledb.createPool(dbConfig);
 
 	console.log(`🚀  Server ready at ${url}`);
 });
