@@ -48,6 +48,8 @@ startStandaloneServer(server, {
 	listen: { port: parseInt(process.env.PORT || "8080") }
 	// ,context: async ({ req }) => ({ token: req.headers.token })
 }).then(({ url }) => {
+	oracledb.initOracleClient();
+
 	oracledb.createPool({
 		user: process.env.NODE_ORACLEDB_USER || "BAD_USER",
 		password: process.env.NODE_ORACLEDB_PASSWORD || "BAD_PASS",
