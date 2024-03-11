@@ -1,7 +1,12 @@
 FROM node:lts-alpine as build
 WORKDIR /home/node
-COPY package*.json ./
-RUN npm install && npm install typescript@latest -g
+COPY package*.json pnpm* ./
+
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
+
+RUN pnpm install && pnpm add typescript@latest -g
 
 COPY ./credentials/wallet/* instantclient/network/admin/
 
