@@ -11,10 +11,10 @@
     "@apollo/server": "4.10.1",
     "apollo-server-lambda": "3.13.0",
     "graphql": "16.8.1",
-    "oracledb": "6.3.0"
+    "oracledb": "6.4.0"
   },
   "devDependencies": {
-    "@types/oracledb": "6.2.3",
+    "@types/oracledb": "6.3.0",
     "eslint": "8.57.0",
     "typescript": "5.4.2"
   }
