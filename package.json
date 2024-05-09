@@ -8,14 +8,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@apollo/server": "4.10.3",
+    "@apollo/server": "4.10.4",
     "apollo-server-lambda": "3.13.0",
     "graphql": "16.8.1",
-    "oracledb": "6.4.0"
+    "oracledb": "6.5.0"
   },
   "devDependencies": {
-    "@types/oracledb": "6.4.0",
-    "eslint": "9.0.0",
+    "@types/oracledb": "6.4.1",
+    "eslint": "9.2.0",
     "typescript": "5.4.5"
   }
 }
