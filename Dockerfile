@@ -19,7 +19,6 @@ RUN tsc
 
 FROM node:lts-alpine
 WORKDIR /home/node
-RUN apk update && apk upgrade ##remove when CVE-2024-5535 is fixed on alpine linux image
 COPY --from=build --chown=node:node /home/node/dist ./
 COPY --from=build --chown=node:node /home/node/instantclient/ ./instantclient/
 COPY --from=build --chown=node:node /home/node/node_modules/ ./node_modules/
