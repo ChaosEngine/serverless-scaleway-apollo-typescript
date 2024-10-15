@@ -18,8 +18,8 @@ importers:
         specifier: 16.9.0
         version: 16.9.0
       oracledb:
-        specifier: 6.6.0
-        version: 6.6.0
+        specifier: 6.4.0
+        version: 6.4.0
     devDependencies:
       '@types/oracledb':
         specifier: 6.5.1
@@ -881,8 +881,8 @@ packages:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
 
-  oracledb@6.6.0:
-    resolution: {integrity: sha512-T3dx+o3j+tVN53wQyr4yGTmoPHLy+a2V8yb1T2PmWrsj3ZlSt2Yu1BgV2yTDqnmBZYpRi/I3yJXRCOHHD7PiyA==}
+  oracledb@6.4.0:
+    resolution: {integrity: sha512-TJI08qzQlf/l7T49VojP9BoQpjEr14NXZmpSzzcLrbNs7qSl0QA/Mc9gGiEdkg5WmwH0wqUjtMC7jlf1WamlYA==}
     engines: {node: '>=14.6'}
 
   p-limit@3.1.0:
@@ -2033,7 +2033,7 @@ snapshots:
       type-check: 0.4.0
       word-wrap: 1.2.5
 
-  oracledb@6.6.0: {}
+  oracledb@6.4.0: {}
 
   p-limit@3.1.0:
     dependencies:

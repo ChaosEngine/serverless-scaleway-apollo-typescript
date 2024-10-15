@@ -41,8 +41,12 @@ startStandaloneServer(server, {
 		connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING,
 		configDir: "./instantclient/network/admin",
 		walletLocation: "./instantclient/network/admin",
-		walletPassword: process.env.NODE_ORACLEDB_PASSWORD
+		walletPassword: ""
 	};
+
+	if (process.env.NODE_ORACLEDB_WALLET_PASSWORD) {
+		dbConfig.walletPassword = process.env.NODE_ORACLEDB_WALLET_PASSWORD;
+	}
 	oracledb.createPool(dbConfig);
 
 	console.log(`🚀  Server ready at ${url}`);
