@@ -18,8 +18,8 @@ importers:
         specifier: 16.9.0
         version: 16.9.0
       oracledb:
-        specifier: 6.4.0
-        version: 6.4.0
+        specifier: 6.6.0
+        version: 6.6.0
     devDependencies:
       '@types/oracledb':
         specifier: 6.5.1
@@ -881,8 +881,8 @@ packages:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
 
-  oracledb@6.4.0:
-    resolution: {integrity: sha512-TJI08qzQlf/l7T49VojP9BoQpjEr14NXZmpSzzcLrbNs7qSl0QA/Mc9gGiEdkg5WmwH0wqUjtMC7jlf1WamlYA==}
+  oracledb@6.6.0:
+    resolution: {integrity: sha512-T3dx+o3j+tVN53wQyr4yGTmoPHLy+a2V8yb1T2PmWrsj3ZlSt2Yu1BgV2yTDqnmBZYpRi/I3yJXRCOHHD7PiyA==}
     engines: {node: '>=14.6'}
 
   p-limit@3.1.0:
@@ -1003,8 +1003,8 @@ packages:
   tr46@0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
 
-  tslib@2.7.0:
-    resolution: {integrity: sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==}
+  tslib@2.8.0:
+    resolution: {integrity: sha512-jWVzBLplnCmoaTr13V9dYbiQ99wvZRd0vNWaDRg+aVYRcjDF3nDksxFDE/+fkXnKhpnUUkmx5pK/v8mCtLVqZA==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -1300,13 +1300,13 @@ snapshots:
     dependencies:
       '@graphql-tools/utils': 8.9.0(graphql@16.9.0)
       graphql: 16.9.0
-      tslib: 2.7.0
+      tslib: 2.8.0
 
   '@graphql-tools/merge@8.4.2(graphql@16.9.0)':
     dependencies:
       '@graphql-tools/utils': 9.2.1(graphql@16.9.0)
       graphql: 16.9.0
-      tslib: 2.7.0
+      tslib: 2.8.0
 
   '@graphql-tools/mock@8.7.20(graphql@16.9.0)':
     dependencies:
@@ -1314,14 +1314,14 @@ snapshots:
       '@graphql-tools/utils': 9.2.1(graphql@16.9.0)
       fast-json-stable-stringify: 2.1.0
       graphql: 16.9.0
-      tslib: 2.7.0
+      tslib: 2.8.0
 
   '@graphql-tools/schema@8.5.1(graphql@16.9.0)':
     dependencies:
       '@graphql-tools/merge': 8.3.1(graphql@16.9.0)
       '@graphql-tools/utils': 8.9.0(graphql@16.9.0)
       graphql: 16.9.0
-      tslib: 2.7.0
+      tslib: 2.8.0
       value-or-promise: 1.0.11
 
   '@graphql-tools/schema@9.0.19(graphql@16.9.0)':
@@ -1329,19 +1329,19 @@ snapshots:
       '@graphql-tools/merge': 8.4.2(graphql@16.9.0)
       '@graphql-tools/utils': 9.2.1(graphql@16.9.0)
       graphql: 16.9.0
-      tslib: 2.7.0
+      tslib: 2.8.0
       value-or-promise: 1.0.12
 
   '@graphql-tools/utils@8.9.0(graphql@16.9.0)':
     dependencies:
       graphql: 16.9.0
-      tslib: 2.7.0
+      tslib: 2.8.0
 
   '@graphql-tools/utils@9.2.1(graphql@16.9.0)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.9.0)
       graphql: 16.9.0
-      tslib: 2.7.0
+      tslib: 2.8.0
 
   '@graphql-typed-document-node/core@3.2.0(graphql@16.9.0)':
     dependencies:
@@ -1894,7 +1894,7 @@ snapshots:
   graphql-tag@2.12.6(graphql@16.9.0):
     dependencies:
       graphql: 16.9.0
-      tslib: 2.7.0
+      tslib: 2.8.0
 
   graphql@16.9.0: {}
 
@@ -2033,7 +2033,7 @@ snapshots:
       type-check: 0.4.0
       word-wrap: 1.2.5
 
-  oracledb@6.4.0: {}
+  oracledb@6.6.0: {}
 
   p-limit@3.1.0:
     dependencies:
@@ -2155,7 +2155,7 @@ snapshots:
 
   tr46@0.0.3: {}
 
-  tslib@2.7.0: {}
+  tslib@2.8.0: {}
 
   type-check@0.4.0:
     dependencies:

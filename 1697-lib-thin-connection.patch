@@ -1,0 +1,16 @@
+diff --git a/lib/thin/connection.js b/lib/thin/connection.js
+index 6d9d4f05d..84e2d4f02 100644
+--- a/lib/thin/connection.js
++++ b/lib/thin/connection.js
+@@ -797,8 +797,11 @@ class ThinConnectionImpl extends ConnectionImpl {
+           await this._protocol._processMessage(authMessage);
+         }
+       } else {
++        const endOfRequestSupport = this.nscon.endOfRequestSupport;
++        this.nscon.endOfRequestSupport = false;
+         await this._protocol._processMessage(protocolMessage);
+         await this._protocol._processMessage(dataTypeMessage);
++        this.nscon.endOfRequestSupport = endOfRequestSupport;
+         await this._protocol._processMessage(authMessage);
+       }
+       if (!params.token) { // non-token Authentication
