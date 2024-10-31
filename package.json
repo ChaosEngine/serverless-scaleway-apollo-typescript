@@ -9,7 +9,7 @@
   "author": "Chaos Engine <andrzej.pauli@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "@apollo/server": "4.11.0",
+    "@apollo/server": "4.11.2",
     "apollo-server-lambda": "3.13.0",
     "graphql": "16.9.0",
     "oracledb": "6.6.0"
