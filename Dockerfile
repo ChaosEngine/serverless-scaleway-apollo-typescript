@@ -8,7 +8,6 @@ RUN corepack enable
 RUN apk add patch
 
 RUN pnpm install && pnpm add typescript@latest -g
-RUN patch --directory=node_modules/oracledb --strip=1 < 1697-lib-thin-connection.patch
 
 COPY ./credentials/wallet/* instantclient/network/admin/
 
