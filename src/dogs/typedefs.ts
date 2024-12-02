@@ -1,6 +1,4 @@
-import { gql } from "apollo-server-lambda";
-
-export const typeDefs = gql`
+export const typeDefs = `#graphql
   type Dog {
     id: Int!
     name: String!
