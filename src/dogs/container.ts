@@ -39,6 +39,10 @@ startStandaloneServer(server, {
 		user: process.env.NODE_ORACLEDB_USER,
 		password: process.env.NODE_ORACLEDB_PASSWORD,
 		connectString: process.env.NODE_ORACLEDB_CONNECTIONSTRING,
+		//DEV: For local dev testing
+		// configDir: "./credentials/wallet",
+		// walletLocation: "./credentials/wallet",
+		//PROD:
 		configDir: "./instantclient/network/admin",
 		walletLocation: "./instantclient/network/admin",
 		walletPassword: ""

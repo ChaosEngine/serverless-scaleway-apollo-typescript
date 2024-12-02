@@ -11,9 +11,6 @@ importers:
       '@apollo/server':
         specifier: 4.11.2
         version: 4.11.2(graphql@16.9.0)
-      '@as-integrations/aws-lambda':
-        specifier: 3.1.0
-        version: 3.1.0(@apollo/server@4.11.2(graphql@16.9.0))
       graphql:
         specifier: 16.9.0
         version: 16.9.0
@@ -115,12 +112,6 @@ packages:
   '@apollo/utils.withrequired@2.0.1':
     resolution: {integrity: sha512-YBDiuAX9i1lLc6GeTy1m7DGLFn/gMnvXqlalOIMjM7DeOgIacEjjfwPqb0M1CQ2v11HhR15d1NmxJoRCfrNqcA==}
     engines: {node: '>=14'}
-
-  '@as-integrations/aws-lambda@3.1.0':
-    resolution: {integrity: sha512-V7H9ICXgt5KDKfEjYSRB59lEVfQqi7oSIZEeBGzPrmfhSPIHyFCNJyHi1hXdJmRb6GHpCNmtffmqRgsB0i9k3w==}
-    engines: {node: '>=16.0'}
-    peerDependencies:
-      '@apollo/server': ^4.0.0
 
   '@eslint-community/eslint-utils@4.4.1':
     resolution: {integrity: sha512-s3O3waFUrMV8P/XaF/+ZTp1X9XBZW1a4B97ZnjQF2KYWaFD2A8KyFBsrsfSjEmjn3RGWAIuvlneuZm3CUK3jbA==}
@@ -225,9 +216,6 @@ packages:
 
   '@protobufjs/utf8@1.1.0':
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
-
-  '@types/aws-lambda@8.10.146':
-    resolution: {integrity: sha512-3BaDXYTh0e6UCJYL/jwV/3+GRslSc08toAiZSmleYtkAUyV5rtvdPYxrG/88uqvTuT6sb27WE9OS90ZNTIuQ0g==}
 
   '@types/body-parser@1.19.5':
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
@@ -1015,11 +1003,6 @@ snapshots:
 
   '@apollo/utils.withrequired@2.0.1': {}
 
-  '@as-integrations/aws-lambda@3.1.0(@apollo/server@4.11.2(graphql@16.9.0))':
-    dependencies:
-      '@apollo/server': 4.11.2(graphql@16.9.0)
-      '@types/aws-lambda': 8.10.146
-
   '@eslint-community/eslint-utils@4.4.1(eslint@9.16.0)':
     dependencies:
       eslint: 9.16.0
@@ -1118,8 +1101,6 @@ snapshots:
   '@protobufjs/pool@1.1.0': {}
 
   '@protobufjs/utf8@1.1.0': {}
-
-  '@types/aws-lambda@8.10.146': {}
 
   '@types/body-parser@1.19.5':
     dependencies:
