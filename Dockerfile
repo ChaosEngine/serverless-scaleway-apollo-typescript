@@ -4,8 +4,7 @@ COPY package*.json pnpm* *.patch ./
 
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-RUN apk add patch
+RUN npm i -g pnpm@latest
 
 RUN pnpm install && pnpm add typescript@latest -g
 
