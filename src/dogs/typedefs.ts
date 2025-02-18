@@ -52,7 +52,7 @@ export type Dog = {
 };
 
 export class NoOwnerError extends Error {
-  constructor(...params:any[]) {
+  constructor(...params:string[]) {
     // Pass remaining arguments (including vendor specific ones) to parent constructor
     super(...params)
 

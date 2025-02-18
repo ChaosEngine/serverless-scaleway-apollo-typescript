@@ -5,7 +5,7 @@ import { typeDefs } from './typedefs';
 import { resolvers } from './resolvers';
 
 interface MyContext {
-	token?: String;
+	token?: string;
 }
 
 const server = new ApolloServer<MyContext>({ typeDefs, resolvers });
@@ -21,8 +21,8 @@ async function closePoolAndExit() {
 		await oracledb.getPool().close(10);
 		console.log('Pool closed');
 		process.exit(0);
-	} catch (err: any) {
-		console.error(err.message);
+	} catch (err: unknown) {
+		console.error(err);
 		process.exit(1);
 	}
 }

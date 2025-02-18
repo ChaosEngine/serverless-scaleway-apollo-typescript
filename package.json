@@ -1,21 +1,30 @@
 {
-  "name": "node14-graphql",
-  "version": "1.0.2",
-  "description": "",
-  "scripts": {
-    "build": "npx tsc",
-    "dev": "node dist/dogs/container.js"
-  },
-  "author": "Chaos Engine <andrzej.pauli@gmail.com>",
-  "license": "ISC",
-  "dependencies": {
-    "@apollo/server": "4.11.3",
-    "graphql": "16.10.0",
-    "oracledb": "6.7.2"
-  },
-  "devDependencies": {
-    "@types/oracledb": "6.5.3",
-    "eslint": "9.20.0",
-    "typescript": "5.7.3"
-  }
+	"name": "node21-graphql",
+	"version": "1.0.2",
+	"description": "",
+	"scripts": {
+		"build": "npx tsc",
+		"dev": "node dist/dogs/container.js",
+		"lint": "eslint ."
+	},
+	"author": "Chaos Engine <andrzej.pauli@gmail.com>",
+	"license": "ISC",
+	"dependencies": {
+		"@apollo/server": "4.11.3",
+		"graphql": "16.10.0",
+		"oracledb": "6.7.2"
+	},
+	"devDependencies": {
+		"@eslint/js": "9.20.0",
+		"@types/oracledb": "6.5.3",
+		"eslint": "9.20.1",
+		"globals": "15.15.0",
+		"typescript": "5.7.3",
+		"typescript-eslint": "8.24.1"
+	},
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"oracledb"
+		]
+	}
 }

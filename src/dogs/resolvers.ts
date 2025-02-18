@@ -18,11 +18,11 @@ type InpOwner = {
 export const resolvers = {
   Query: {
     dogs: () => listDogs(),
-    dog: async (_: any, { id }: ID) => {
+    dog: async (_: unknown, { id }: ID) => {
       let res;
       try {
         res = await getDog(id);
-      } catch (err:any) {
+      } catch (err: unknown) {
         console.error(err);
         throw new Error('Something went wrong');
       }
@@ -32,11 +32,11 @@ export const resolvers = {
       return res;
     },
     owners: () => listOwners(),
-    owner: async (_: any, { id }: ID) => {
+    owner: async (_: unknown, { id }: ID) => {
       let res;
       try {
         res = await getOwner(id);
-      } catch (err:any) {
+      } catch (err: unknown) {
         console.error(err);
         throw new Error('Something went wrong');
       }
@@ -48,11 +48,11 @@ export const resolvers = {
   },
 
   Mutation: {
-    createDog: async (_: any, { name, ownerId }: InpDog) => {
+    createDog: async (_: unknown, { name, ownerId }: InpDog) => {
       try {
         const newDog = await createDog(name, ownerId);
         return newDog;
-      } catch (err:any) {
+      } catch (err: unknown) {
         console.error(err);
         if (err instanceof NoOwnerError)
           throw new Error('Owner does not exist');
@@ -61,11 +61,11 @@ export const resolvers = {
       }
     },
 
-    deleteDog: async (_: any, { id }: ID) => {
+    deleteDog: async (_: unknown, { id }: ID) => {
       let dog;
       try {
         dog = await getDog(id);
-      } catch (err:any) {
+      } catch (err: unknown) {
         console.error(err);
         throw new Error('Something went wrong');
       }
@@ -74,29 +74,29 @@ export const resolvers = {
       }
       try {
         await deleteDog(dog.id);
-      } catch (error:any) {
+      } catch (error: unknown) {
         console.error(error);
         throw new Error('Something went wrong');
       }
       return dog;
     },
 
-    createOwner: async (_: any, { firstname, lastname }: InpOwner) => {
+    createOwner: async (_: unknown, { firstname, lastname }: InpOwner) => {
       // get Owner
       try {
         const owner = await createOwner(firstname, lastname);
         return owner;
-      } catch (err:any) {
+      } catch (err: unknown) {
         console.error(err);
         throw new Error('Something went wrong');
       }
     },
 
-    deleteOwner: async (_: any, { id }: ID) => {
+    deleteOwner: async (_: unknown, { id }: ID) => {
       let owner;
       try {
         owner = await getOwner(id);
-      } catch (err:any) {
+      } catch (err: unknown) {
         console.error(err);
         throw new Error('Something went wrong');
       }
@@ -105,7 +105,7 @@ export const resolvers = {
       }
       try {
         await deleteOwner(owner.id);
-      } catch (error:any) {
+      } catch (error: unknown) {
         console.error(error);
         throw new Error('Something went wrong');
       }

@@ -1,4 +1,4 @@
-import oracledb from 'oracledb';
+import oracledb, { BindDefinition, BindParameters } from 'oracledb';
 import { Owner, Dog, NoOwnerError } from './typedefs';
 
 // ---- MySQL Setup ---- //
@@ -30,7 +30,7 @@ async function executeQuery<T>(query: string): Promise<T[] | undefined> {
   }
 }
 
-async function executeQueryWithParams<T>(query: string, binds: Array<any>, bindDefs: Array<any>): Promise<oracledb.Result<T> | undefined> {
+async function executeQueryWithParams<T>(query: string, binds: BindParameters, bindDefs: BindDefinition[]): Promise<oracledb.Result<T> | undefined> {
   const connection = await createConnection();
   try {
     console.info(`new query with params ${query}`);
@@ -49,11 +49,11 @@ async function executeQueryWithParams<T>(query: string, binds: Array<any>, bindD
   }
 }
 
-async function executeQueryReturningDml<T>(query: string, parameters: any): Promise<oracledb.Result<T> | undefined> {
+async function executeQueryReturningDml<T>(query: string, bindParameters: BindParameters): Promise<oracledb.Result<T> | undefined> {
   const connection = await createConnection();
   try {
     console.info(`new query with params ${query}`);
-    const result = await connection.execute<T>(query, parameters,
+    const result = await connection.execute<T>(query, bindParameters,
       {
         autoCommit: true,
       });
@@ -72,7 +72,7 @@ export const listDogs = async (): Promise<Dog[] | undefined> => {
   const query = 'SELECT ID "id", NAME "name", OWNER_ID "owner_id" from dogs';
   try {
     return await executeQuery<Dog>(query);
-  } catch (error:any) {
+  } catch (error: unknown) {
     console.error(error);
     throw new Error('unable to access database');
   }
@@ -91,7 +91,7 @@ export const getDog = async (id: number): Promise<Dog | undefined> => {
     }
     // console.log(results);
     return results.rows[0];
-  } catch (error:any) {
+  } catch (error: unknown) {
     console.error(error);
     throw new Error('unable to access database');
   }
@@ -124,18 +124,18 @@ export const createDog = async (name: string, ownerId: number): Promise<Dog | un
         END;
 			
 				IF ( oid > -1 ) THEN
-          INSERT INTO dogs (name, owner_id) VALUES(:name, oid) RETURNING id INTO :new_id;
+          INSERT INTO dogs (name, owner_id) VALUES(:name, oid) RETURNING id INTO :id;
 				END IF;
 			END;
   `;
-  const result = await executeQueryReturningDml<any>(createQuery,
+  const result = await executeQueryReturningDml<Dog>(createQuery,
     {
       owner_id: { type: oracledb.NUMBER, val: ownerId },
       name: { type: oracledb.STRING, val: name },
-      new_id: { type: oracledb.NUMBER, dir: oracledb.BIND_OUT },
+      id: { type: oracledb.NUMBER, dir: oracledb.BIND_OUT },
     });
   //console.log(result?.outBinds);
-  const new_id = result && result.outBinds ? result.outBinds.new_id : undefined;
+  const new_id = result && result.outBinds ? result.outBinds.id : undefined;
   if (!new_id || new_id <= -1)
     throw new NoOwnerError();
   const dog = {
@@ -152,7 +152,7 @@ export const deleteDog = async (id: number) => {
     { type: oracledb.NUMBER },
   ];
   const query = `DELETE FROM dogs WHERE id = :1`;
-  const result = await executeQueryWithParams<any>(query, binds, bindDefs);
+  const result = await executeQueryWithParams<number>(query, binds, bindDefs);
   return result?.rows;
 }
 
@@ -160,7 +160,7 @@ export const deleteDog = async (id: number) => {
 
 export const createOwner = async (firstname: string, lastname: string): Promise<Owner | undefined> => {
   const createQuery = `INSERT INTO owners (firstname, lastname) VALUES(:firstname, :lastname) RETURNING id INTO :id`;
-  const result = await executeQueryReturningDml<any>(createQuery,
+  const result = await executeQueryReturningDml<{id: number[]}>(createQuery,
     {
       firstname: { type: oracledb.STRING, val: firstname },
       lastname: { type: oracledb.STRING, val: lastname },
@@ -179,7 +179,7 @@ export const deleteOwner = async (id: number) => {
     { type: oracledb.NUMBER },
   ];
   const query = `DELETE FROM owners WHERE id = :1`;
-  const result = await executeQueryWithParams<any>(query, binds, bindDefs);
+  const result = await executeQueryWithParams<number>(query, binds, bindDefs);
   return result?.rows;
 }
 
