@@ -10,17 +10,17 @@
 	"author": "Chaos Engine <andrzej.pauli@gmail.com>",
 	"license": "ISC",
 	"dependencies": {
-		"@apollo/server": "5.4.0",
-		"graphql": "16.13.1",
+		"@apollo/server": "5.5.0",
+		"graphql": "16.13.2",
 		"oracledb": "6.10.0"
 	},
 	"devDependencies": {
 		"@eslint/js": "10.0.1",
 		"@types/oracledb": "6.10.2",
-		"eslint": "10.0.3",
+		"eslint": "10.1.0",
 		"globals": "17.4.0",
 		"typescript": "5.9.3",
-		"typescript-eslint": "8.57.1"
+		"typescript-eslint": "8.57.2"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [
