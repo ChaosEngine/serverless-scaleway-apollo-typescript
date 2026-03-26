@@ -1,14 +1,10 @@
 {
   "compilerOptions": {
-    "allowJs": true,
+    "allowJs": false,
     "alwaysStrict": true,
-    // "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "jsx": "preserve",
-    "lib": ["dom", "es2017"],
-    // "module": "esnext",
-    // "moduleResolution": "node",
+    "lib": ["ES2022"],
     "noEmit": false,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": true,
@@ -16,24 +12,15 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    // "target": "esnext",
-
-
-    "module": "commonjs",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es6",
+    "target": "ES2022",
     "noImplicitAny": true,
-    "moduleResolution": "node",
     "sourceMap": false,
-    "outDir": "dist",
-    "baseUrl": ".",
-    "paths": {
-        "*": [
-            "node_modules/*"
-        ]
-    }
+    "outDir": "dist"
   },
-  "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "exclude": ["node_modules", "dist"],
+  "include": ["src/**/*.ts"]
 }
