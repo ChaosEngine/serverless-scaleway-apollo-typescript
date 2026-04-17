@@ -16,10 +16,10 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "10.0.1",
-		"@types/oracledb": "6.10.2",
-		"eslint": "10.2.0",
+		"@types/oracledb": "6.10.3",
+		"eslint": "10.2.1",
 		"globals": "17.5.0",
-		"typescript": "6.0.2",
+		"typescript": "6.0.3",
 		"typescript-eslint": "8.58.2"
 	},
 	"pnpm": {
