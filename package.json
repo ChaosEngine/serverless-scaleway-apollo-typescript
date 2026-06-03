@@ -11,16 +11,16 @@
 	"license": "ISC",
 	"dependencies": {
 		"@apollo/server": "5.5.1",
-		"graphql": "16.14.0",
-		"oracledb": "6.10.0"
+		"graphql": "16.14.1",
+		"oracledb": "7.0.0"
 	},
 	"devDependencies": {
 		"@eslint/js": "10.0.1",
-		"@types/oracledb": "6.10.3",
-		"eslint": "10.4.0",
+		"@types/oracledb": "6.10.4",
+		"eslint": "10.4.1",
 		"globals": "17.6.0",
 		"typescript": "6.0.3",
-		"typescript-eslint": "8.59.3"
+		"typescript-eslint": "8.60.1"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [
