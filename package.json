@@ -11,7 +11,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"@apollo/server": "5.5.1",
-		"graphql": "17.0.1",
+		"graphql": "17.0.2",
 		"oracledb": "7.0.0"
 	},
 	"devDependencies": {
@@ -20,7 +20,7 @@
 		"eslint": "10.6.0",
 		"globals": "17.7.0",
 		"typescript": "6.0.3",
-		"typescript-eslint": "8.62.0"
+		"typescript-eslint": "8.63.0"
 	},
 	"pnpm": {
 		"onlyBuiltDependencies": [
