@@ -1,4 +1,4 @@
-export const demoHandler = async (event: Event/* , _context: unknown */) => {
+export const demoHandler = async (event: unknown/* , _context: unknown */) => {
   console.log(event);
   return {
     body: JSON.stringify({
