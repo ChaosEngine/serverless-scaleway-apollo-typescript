@@ -1,4 +1,4 @@
-FROM dhi.io/bun:1-alpine3.22-dev AS build
+FROM dhi.io/bun:1-alpine-dev AS build
 WORKDIR /home/nonroot
 COPY package*.json pnpm* bun* *.patch ./
 
@@ -11,7 +11,7 @@ RUN bun build ./src/dogs/container.ts --outdir ./dist --target bun
 
 
 
-FROM dhi.io/bun:1-alpine3.22
+FROM dhi.io/bun:1-alpine
 WORKDIR /home/nonroot
 COPY --from=build --chown=nonroot:nonroot /home/nonroot/dist ./
 COPY --from=build --chown=nonroot:nonroot /home/nonroot/instantclient/ ./instantclient/
